@@ -205,6 +205,8 @@ allow { appdomain -isolated_app } media_rw_data_file:file create_file_perms;
 # File write access allowed for FDs returned through Storage Access Framework
 allow appdomain vfat:dir r_dir_perms;
 allow appdomain vfat:file rw_file_perms;
+allow appdomain sdcard_posix:dir r_dir_perms;
+allow appdomain sdcard_posix:file rw_file_perms;
 
 # Access SDcard via the fuse mount.
 allow appdomain fuse:dir create_dir_perms;
