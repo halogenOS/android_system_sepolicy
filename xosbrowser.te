@@ -1,0 +1,2 @@
+allow isolated_app app_data_file:dir { getattr search };
+allow debuggerd app_data_file:file { read open getattr };
