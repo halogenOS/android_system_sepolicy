@@ -101,3 +101,5 @@ type misc_block_device, dev_type;
 
 # Bootctrl block device used by A/B update (update_engine, update_verifier).
 type bootctrl_block_device, dev_type;
+
+type persist_block_device, dev_type;
