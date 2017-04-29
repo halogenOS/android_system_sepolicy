@@ -536,6 +536,10 @@ allow system_server toolbox_exec:file rx_file_perms;
 allow system_server theme_data_file:dir search;
 allow system_server theme_data_file:file r_file_perms;
 
+# Allow system server to set qemu.hw.mainkeys property
+# Necessary for navbar
+allow system_server qemu_hw_mainkeys_prop:property_service set;
+
 # Postinstall
 #
 # For OTA dexopt, allow calls coming from postinstall.
