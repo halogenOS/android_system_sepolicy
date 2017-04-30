@@ -79,3 +79,4 @@ control_logd(system_app)
 # Themes
 allow system_app theme_data_file:dir create_dir_perms;
 allow system_app theme_data_file:file create_file_perms;
+allow system_app persist_debug_prop:property_service set;
