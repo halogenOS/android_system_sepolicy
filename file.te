@@ -119,6 +119,10 @@ type nativetest_data_file, file_type, data_file_type;
 type ringtone_file, file_type, data_file_type, mlstrustedobject;
 # /data/preloads
 type preloads_data_file, file_type, data_file_type;
+# Persistant file
+type persist_file, file_type;
+# rfs system file
+type rfs_system_file, file_type;
 
 # Mount locations managed by vold
 type mnt_media_rw_file, file_type;

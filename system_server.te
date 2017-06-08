@@ -4,6 +4,8 @@
 #
 type system_server, domain, domain_deprecated, mlstrustedsubject;
 
+type qemu_hw_mainkeys_prop, property_type, core_property_type;
+
 # Define a type for tmpfs-backed ashmem regions.
 tmpfs_domain(system_server)
 
