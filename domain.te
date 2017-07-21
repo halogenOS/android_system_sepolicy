@@ -147,9 +147,6 @@ allow domain fs_type:dir getattr;
 ### neverallow rules
 ###
 
-# Don't allow others to access memcg.
-neverallow { domain -init -lmkd userdebug_or_eng(`-domain') } memcg_device:dir_file_class_set *;
-
 # Do not allow any domain other than init or recovery to create unlabeled files.
 neverallow { domain -init -recovery } unlabeled:dir_file_class_set create;
 
