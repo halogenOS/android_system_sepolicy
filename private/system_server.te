@@ -17,11 +17,11 @@ allow system_server zygote_tmpfs:file read;
 
 # For art.
 allow system_server dalvikcache_data_file:dir r_dir_perms;
-allow system_server dalvikcache_data_file:file { r_file_perms execute };
-userdebug_or_eng(`
-  # Report dalvikcache_data_file:file execute violations.
-  auditallow system_server dalvikcache_data_file:file execute;
-')
+allow system_server dalvikcache_data_file:file r_file_perms;
+
+# When running system server under --invoke-with, we'll try to load the boot image under the
+# system server domain, following links to the system partition.
+with_asan(`allow system_server dalvikcache_data_file:lnk_file r_file_perms;')
 
 # /data/resource-cache
 allow system_server resourcecache_data_file:file r_file_perms;
@@ -79,6 +79,9 @@ allow system_server kernel:system module_request;
 # Allow alarmtimers to be set
 allow system_server self:capability2 wake_alarm;
 
+# Create and share netlink_netfilter_sockets for tetheroffload.
+allow system_server self:netlink_netfilter_socket create_socket_perms_no_ioctl;
+
 # Use netlink uevent sockets.
 allow system_server self:netlink_kobject_uevent_socket create_socket_perms_no_ioctl;
 
@@ -99,7 +102,7 @@ allow system_server self:socket create_socket_perms_no_ioctl;
 allow system_server self:netlink_route_socket nlmsg_write;
 
 # Kill apps.
-allow system_server appdomain:process { sigkill signal };
+allow system_server appdomain:process { getpgid sigkill signal };
 
 # Set scheduling info for apps.
 allow system_server appdomain:process { getsched setsched };
@@ -177,6 +180,7 @@ binder_service(system_server)
 
 # Use HALs
 hal_client_domain(system_server, hal_allocator)
+hal_client_domain(system_server, hal_configstore)
 hal_client_domain(system_server, hal_contexthub)
 hal_client_domain(system_server, hal_fingerprint)
 hal_client_domain(system_server, hal_gnss)
@@ -241,6 +245,7 @@ allow system_server {
   hal_bluetooth_server
   hal_camera_server
   hal_graphics_composer_server
+  hal_sensors_server
   hal_vr_server
   mediacodec # TODO(b/36375899): hal_omx_server
 }:process { signal };
@@ -660,10 +665,12 @@ allow system_server sysfs_leds:dir r_dir_perms;
 allow system_server debugfs_tracing_instances:dir search;
 allow system_server debugfs_wifi_tracing:file rw_file_perms;
 
-# allow system_server to exec shell on ASAN builds. Needed to run
+# allow system_server to exec shell, asanwrapper & zygote(app_process) on ASAN builds. Needed to run
 # asanwrapper.
 with_asan(`
   allow system_server shell_exec:file rx_file_perms;
+  allow system_server asanwrapper_exec:file rx_file_perms;
+  allow system_server zygote_exec:file rx_file_perms;
 ')
 
 ###
@@ -691,7 +698,7 @@ neverallow system_server {
   file_type
   -toolbox_exec
   -logcat_exec
-  with_asan(`-shell_exec')
+  with_asan(`-shell_exec -asanwrapper_exec -zygote_exec')
 }:file execute_no_trans;
 
 # Ensure that system_server doesn't perform any domain transitions other than

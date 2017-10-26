@@ -76,6 +76,9 @@ recovery_only(`
   allow recovery functionfs:dir search;
   allow recovery functionfs:file rw_file_perms;
 
+  # Access to /sys/fs/selinux/policyvers for compatibility check
+  allow recovery selinuxfs:file r_file_perms;
+
   # Required to e.g. wipe userdata/cache.
   allow recovery device:dir r_dir_perms;
   allow recovery block_device:dir r_dir_perms;
@@ -110,6 +113,9 @@ recovery_only(`
 
   # Read serial number of the device from system properties
   get_prop(recovery, serialno_prop)
+
+  # Set sys.usb.ffs.ready when starting minadbd for sideload.
+  set_prop(recovery, ffs_prop)
 
   # Use setfscreatecon() to label files for OTA updates.
   allow recovery self:process setfscreate;
