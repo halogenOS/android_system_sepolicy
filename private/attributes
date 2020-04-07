@@ -31,3 +31,6 @@ expandattribute update_provider false;
 until_board_api(202504, `
     attribute tee_service_type;
 ')
+
+# All types used for sdcard_posix context= mounts.
+attribute sdcard_posix_contextmount_type;
