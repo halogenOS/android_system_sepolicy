@@ -2,6 +2,7 @@ type activity_structured_service,    system_api_service, system_server_service, 
 type allowlist_service,              app_api_service, system_server_service, service_manager_type;
 type ambient_context_service,        app_api_service, system_server_service, service_manager_type;
 type aoad_service,                   service_manager_type;
+type audio_information_service,      service_manager_type;
 type authentication_policy_service,  app_api_service, system_api_service, system_server_service, service_manager_type;
 
 type casefolding_remover_service,    service_manager_type;

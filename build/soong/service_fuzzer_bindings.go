@@ -294,6 +294,7 @@ var (
 		"cpu_monitor":                                                          EXCEPTION_NO_FUZZER,
 		"credential":                                                           EXCEPTION_NO_FUZZER,
 		"crossprofileapps":                                                     EXCEPTION_NO_FUZZER,
+		"custom.media.audio_information":                                       EXCEPTION_NO_FUZZER,
 		"d2d_connectivity":                                                     EXCEPTION_NO_FUZZER,
 		"dataloader_manager":                                                   EXCEPTION_NO_FUZZER,
 		"dbinfo":                                                               EXCEPTION_NO_FUZZER,

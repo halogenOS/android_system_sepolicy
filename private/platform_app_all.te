@@ -73,6 +73,7 @@ userdebug_or_eng(`
 ')
 
 allow platform_app_all audioserver_service:service_manager find;
+allow platform_app_all audio_information_service:service_manager find;
 allow platform_app_all cameraserver_service:service_manager find;
 allow platform_app_all drmserver_service:service_manager find;
 allow platform_app_all mediaserver_service:service_manager find;

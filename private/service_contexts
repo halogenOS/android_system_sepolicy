@@ -285,6 +285,7 @@ coverage                                  u:object_r:coverage_service:s0
 cpuinfo                                   u:object_r:cpuinfo_service:s0
 cpu_monitor                               u:object_r:cpu_monitor_service:s0
 crossprofileapps                          u:object_r:crossprofileapps_service:s0
+custom.media.audio_information            u:object_r:audio_information_service:s0
 d2d_connectivity                          u:object_r:d2d_connectivity_service:s0
 dataloader_manager                        u:object_r:dataloader_manager_service:s0
 dbinfo                                    u:object_r:dbinfo_service:s0
