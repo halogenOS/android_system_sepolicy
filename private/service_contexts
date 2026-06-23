@@ -345,6 +345,7 @@ mdns                                      u:object_r:mdns_service:s0
 media.aaudio                              u:object_r:audioserver_service:s0
 media.audio_flinger                       u:object_r:audioserver_service:s0
 media.audio_policy                        u:object_r:audioserver_service:s0
+custom.media.audio_information            u:object_r:audioserver_service:s0
 media.camera                              u:object_r:cameraserver_service:s0
 media.camera.proxy                        u:object_r:cameraproxy_service:s0
 media.log                                 u:object_r:audioserver_service:s0

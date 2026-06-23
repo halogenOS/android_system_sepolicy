@@ -251,6 +251,7 @@ var (
 		"cloudsearch":                                                         EXCEPTION_NO_FUZZER,
 		"cloudsearch_service":                                                 EXCEPTION_NO_FUZZER,
 		"com.android.net.IProxyService":                                       EXCEPTION_NO_FUZZER,
+		"custom.media.audio_information":                                      []string{"audioinformation_service_fuzzer"},
 		"companiondevice":                                                     EXCEPTION_NO_FUZZER,
 		"communal":                                                            EXCEPTION_NO_FUZZER,
 		"platform_compat":                                                     EXCEPTION_NO_FUZZER,
