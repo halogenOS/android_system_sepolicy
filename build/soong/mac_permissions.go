@@ -92,9 +92,6 @@ func buildVariant(ctx android.ModuleContext) string {
 }
 
 func (m *macPermissionsModule) GenerateAndroidBuildActions(ctx android.ModuleContext) {
-	platformKeys := getAllKeyPaths(ctx, ctx.Config().DefaultAppCertificateDir(ctx))
-	mainlineKeys := getAllKeyPaths(ctx, ctx.Config().MainlineSepolicyDevCertificatesDir(ctx))
-	bluetoothKeys := getAllKeyPaths(ctx, ctx.Config().MainlineBluetoothSepolicyDevCertificatesDir(ctx))
 	keys := android.PathsForModuleSrc(ctx, m.properties.Keys)
 	srcs := android.PathsForModuleSrc(ctx, m.properties.Srcs)
 
@@ -106,17 +103,22 @@ func (m *macPermissionsModule) GenerateAndroidBuildActions(ctx android.ModuleCon
 		Text("--fatal-warnings -s").
 		FlagForEachArg("-D", ctx.DeviceConfig().SepolicyM4Defs()).
 		Inputs(keys).
-		FlagWithOutput("> ", m4Keys).
-		Implicits(platformKeys).
-		Implicits(mainlineKeys).
-		Implicits(bluetoothKeys)
+		FlagWithOutput("> ", m4Keys)
 
 	m.outputPath = android.PathForModuleOut(ctx, m.stem())
-	rule.Command().Text("DEFAULT_SYSTEM_DEV_CERTIFICATE="+ctx.Config().DefaultAppCertificateDir(ctx).String()).
-		Text("MAINLINE_SEPOLICY_DEV_CERTIFICATES="+ctx.Config().MainlineSepolicyDevCertificatesDir(ctx).String()).
-		Text("MAINLINE_BLUETOOTH_SEPOLICY_DEV_CERTIFICATES="+ctx.Config().MainlineBluetoothSepolicyDevCertificatesDir(ctx).String()).
-		Text("MAINLINE_NFC_SEPOLICY_DEV_CERTIFICATES="+ctx.Config().MainlineNfcSepolicyDevCertificatesDir(ctx).String()).
-		BuiltTool("insertkeys").
+	cmd := rule.Command()
+	for _, keyDir := range []struct {
+		variable string
+		dir      android.SourcePath
+	}{
+		{"DEFAULT_SYSTEM_DEV_CERTIFICATE", ctx.Config().DefaultAppCertificateDir(ctx)},
+		{"MAINLINE_SEPOLICY_DEV_CERTIFICATES", ctx.Config().MainlineSepolicyDevCertificatesDir(ctx)},
+		{"MAINLINE_BLUETOOTH_SEPOLICY_DEV_CERTIFICATES", ctx.Config().MainlineBluetoothSepolicyDevCertificatesDir(ctx)},
+		{"MAINLINE_NFC_SEPOLICY_DEV_CERTIFICATES", ctx.Config().MainlineNfcSepolicyDevCertificatesDir(ctx)},
+	} {
+		android.FlagWithKeyDirectory(ctx, cmd, keyDir.variable+"=", keyDir.dir, getAllKeyPaths(ctx, keyDir.dir))
+	}
+	cmd.BuiltTool("insertkeys").
 		FlagWithArg("-t ", buildVariant(ctx)).
 		Input(m4Keys).
 		FlagWithOutput("-o ", m.outputPath).
