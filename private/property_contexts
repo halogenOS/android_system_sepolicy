@@ -1365,10 +1365,13 @@ ro.vendor.redirect_socket_calls u:object_r:vendor_socket_hook_prop:s0 exact bool
 
 service.bootanim.exit       u:object_r:bootanim_system_prop:s0 exact int
 service.bootanim.progress   u:object_r:bootanim_system_prop:s0 exact int
+service.bootanim.stage      u:object_r:bootanim_system_prop:s0 exact string
+service.bootanim.step       u:object_r:bootanim_system_prop:s0 exact int
 persist.bootanim.color1     u:object_r:bootanim_system_prop:s0 exact int
 persist.bootanim.color2     u:object_r:bootanim_system_prop:s0 exact int
 persist.bootanim.color3     u:object_r:bootanim_system_prop:s0 exact int
 persist.bootanim.color4     u:object_r:bootanim_system_prop:s0 exact int
+persist.bootanim.stage_times u:object_r:bootanim_system_prop:s0 exact string
 
 sys.init.userspace_reboot.in_progress u:object_r:userspace_reboot_exported_prop:s0 exact bool
 sys.use_memfd                         u:object_r:use_memfd_prop:s0 exact bool
